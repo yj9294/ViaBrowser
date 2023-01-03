@@ -9,6 +9,9 @@ import UIKit
 
 class CleanViewController: UIViewController {
     
+    var timer: Timer? = nil
+    var adTimer: Timer? = nil
+    
     var cleanHandle: (()->Void)? = nil
     
     lazy var icon1: UIImageView = {
@@ -21,10 +24,36 @@ class CleanViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.stopAnimation()
-            self.dismiss()
+        var progress = 0.0
+        var duration = 2 / 0.6
+        var isNeedShowAd = false
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] t in
+            if progress >= 1.0 {
+                t.invalidate()
+                GADHelper.share.show(.interstitial, from: self) { _ in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        self?.stopAnimation()
+                        self?.dismiss()
+                    }
+                }
+            } else {
+                progress += 1.0 / (duration * 100)
+            }
+            
+            if isNeedShowAd, GADHelper.share.isLoaded(.interstitial) {
+                duration = 0.1
+            }
         }
+        
+        adTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: { t in
+            t.invalidate()
+            isNeedShowAd = true
+            duration = 16.0
+        })
+        
+        GADHelper.share.load(.interstitial)
+        GADHelper.share.load(.native)
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -8,20 +8,52 @@
 import UIKit
 
 class TabViewController: UIViewController {
+    
+    var willAppear = false
+    
+    lazy var adView: GADNativeView = {
+        let view = GADNativeView()
+        view.layer.cornerRadius = 6
+        view.layer.masksToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        NotificationCenter.default.addObserver(forName: .nativeUpdate, object: nil, queue: .main) { [weak self] noti in
+            if let ad = noti.object as? NativeADModel, self?.willAppear == true {
+                if Date().timeIntervalSince1970 - (GADHelper.share.tabNativeAdImpressionDate ?? Date(timeIntervalSinceNow: -11)).timeIntervalSince1970 > 10 {
+                    self?.adView.nativeAd = ad.nativeAd
+                    GADHelper.share.tabNativeAdImpressionDate = Date()
+                } else {
+                    NSLog("[ad] 10s tab 原生广告刷新或数据填充间隔.")
+                }
+            } else {
+                self?.adView.nativeAd = nil
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        willAppear = true
+        GADHelper.share.load(.interstitial)
+        GADHelper.share.load(.native)
         AnalyticsHelper.log(event: .tabShow)
     }
     
     func setupUI() {
         
         view.backgroundColor = UIColor.hex("#FAFAFA")
+        
+        view.addSubview(adView)
+        NSLayoutConstraint.activate([
+            adView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+            adView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            adView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ])
         
         let flowLayout = UICollectionViewFlowLayout()
         let width = ((view.window?.bounds.width ?? 375.0) - 16 * 2 - 14) / 2.0
@@ -35,7 +67,7 @@ class TabViewController: UIViewController {
         collectionView.delegate = self
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+            collectionView.topAnchor.constraint(equalTo: adView.bottomAnchor, constant: 20),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
@@ -73,6 +105,13 @@ class TabViewController: UIViewController {
             addButton.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor)
         ])
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        willAppear = false
+        GADHelper.share.close(.native)
+    }
+    
 
 }
 

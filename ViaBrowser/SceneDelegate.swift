@@ -34,6 +34,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 )
         }
         
+        GADHelper.share.requestRemoteConfig()
+        
         sceneDelegate = self
         rootViewController = root
         window?.rootViewController = root
@@ -59,7 +61,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
-        
+        GADHelper.share.requestRemoteConfig()
         
         if let vc = window?.rootViewController?.presentedViewController {
             vc.dismiss(animated: true)

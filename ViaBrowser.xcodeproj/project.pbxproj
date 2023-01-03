@@ -31,6 +31,8 @@
 		C767313D295D4BD20050E061 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C767313C295D4BD20050E061 /* GoogleService-Info.plist */; };
 		C767313F2963C1560050E061 /* GADHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767313E2963C1560050E061 /* GADHelper.swift */; };
 		C76731422963C1AE0050E061 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = C76731412963C1AE0050E061 /* GoogleMobileAds */; };
+		C76731442963C58C0050E061 /* admob.json in Resources */ = {isa = PBXBuildFile; fileRef = C76731432963C58C0050E061 /* admob.json */; };
+		C76731462963CAF80050E061 /* GADNativeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76731452963CAF80050E061 /* GADNativeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +57,8 @@
 		C7673130295D44F10050E061 /* FirebaseUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUtil.swift; sourceTree = "<group>"; };
 		C767313C295D4BD20050E061 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C767313E2963C1560050E061 /* GADHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GADHelper.swift; sourceTree = "<group>"; };
+		C76731432963C58C0050E061 /* admob.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = admob.json; sourceTree = "<group>"; };
+		C76731452963CAF80050E061 /* GADNativeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GADNativeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +110,9 @@
 				C767313C295D4BD20050E061 /* GoogleService-Info.plist */,
 				C7673122295C600C0050E061 /* BrowserHelper.swift */,
 				C7673130295D44F10050E061 /* FirebaseUtil.swift */,
+				C76731432963C58C0050E061 /* admob.json */,
 				C767313E2963C1560050E061 /* GADHelper.swift */,
+				C76731452963CAF80050E061 /* GADNativeView.swift */,
 				C719DD78295ACA560003C7E7 /* Assets.xcassets */,
 				C7673120295BF4FD0050E061 /* Main.storyboard */,
 				C719DD83295B258C0003C7E7 /* Helper.swift */,
@@ -186,6 +192,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C76731442963C58C0050E061 /* admob.json in Resources */,
 				C7673121295BF4FD0050E061 /* Main.storyboard in Resources */,
 				C767313D295D4BD20050E061 /* GoogleService-Info.plist in Resources */,
 				C719DD7C295ACA560003C7E7 /* LaunchScreen.storyboard in Resources */,
@@ -212,6 +219,7 @@
 				C719DD70295ACA540003C7E7 /* AppDelegate.swift in Sources */,
 				C719DD72295ACA540003C7E7 /* SceneDelegate.swift in Sources */,
 				C719DD84295B258C0003C7E7 /* Helper.swift in Sources */,
+				C76731462963CAF80050E061 /* GADNativeView.swift in Sources */,
 				C7673129295C7F980050E061 /* PrivacyViewController.swift in Sources */,
 				C719DD8A295BEA070003C7E7 /* HomeViewController.swift in Sources */,
 				C7673123295C600C0050E061 /* BrowserHelper.swift in Sources */,
@@ -369,7 +377,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.ViaBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -404,7 +412,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.ViaBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

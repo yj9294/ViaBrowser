@@ -26,9 +26,19 @@ class HomeViewController: UIViewController {
     
     var startDate: Date? = nil
     
+    var willAppear: Bool = false
+    
     var webView: WKWebView {
         BrowserUtil.shared.webItem.webView
     }
+    
+    lazy var adView: GADNativeView = {
+        let view = GADNativeView()
+        view.layer.cornerRadius = 6
+        view.layer.masksToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     lazy var textField: UITextField = {
         let textField = UITextField()
@@ -116,6 +126,18 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         setupUI()
         layoutViews()
+        NotificationCenter.default.addObserver(forName: .nativeUpdate, object: nil, queue: .main) { [weak self] noti in
+            if let ad = noti.object as? NativeADModel, self?.willAppear == true {
+                if Date().timeIntervalSince1970 - (GADHelper.share.homeNativeAdImpressionDate ?? Date(timeIntervalSinceNow: -11)).timeIntervalSince1970 > 10 {
+                    self?.adView.nativeAd = ad.nativeAd
+                    GADHelper.share.homeNativeAdImpressionDate = Date()
+                } else {
+                    NSLog("[ad] 10s home 原生广告刷新或数据填充间隔.")
+                }
+            } else {
+                self?.adView.nativeAd = nil
+            }
+        }
         ATTrackingManager.requestTrackingAuthorization { _ in
         }
     }
@@ -125,12 +147,25 @@ class HomeViewController: UIViewController {
         if webView.superview != nil {
             webView.frame = navigationView.frame
         }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        willAppear = true
+        
         layoutViews()
+        GADHelper.share.load(.native)
+        GADHelper.share.load(.interstitial)
+        
         AnalyticsHelper.log(event: .homeShow)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        willAppear = false
+        
+        GADHelper.share.close(.native)
     }
     
     func setupUI() {
@@ -193,7 +228,7 @@ class HomeViewController: UIViewController {
         icon.translatesAutoresizingMaskIntoConstraints = false
         navigationView.addSubview(icon)
         NSLayoutConstraint.activate([
-            icon.topAnchor.constraint(equalTo: navigationView.topAnchor, constant: 30),
+            icon.topAnchor.constraint(equalTo: navigationView.topAnchor, constant: 10),
             icon.centerXAnchor.constraint(equalTo: navigationView.centerXAnchor)
         ])
         
@@ -209,10 +244,19 @@ class HomeViewController: UIViewController {
         collectionView.dataSource = self
         navigationView.addSubview(collectionView)
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: icon.bottomAnchor, constant: 20),
+            collectionView.topAnchor.constraint(equalTo: icon.bottomAnchor, constant: -60),
             collectionView.leadingAnchor.constraint(equalTo: navigationView.leadingAnchor, constant: 16),
             collectionView.trailingAnchor.constraint(equalTo: navigationView.trailingAnchor, constant: -16),
             collectionView.heightAnchor.constraint(equalToConstant: 180)
+        ])
+        
+        
+        navigationView.addSubview(adView)
+        NSLayoutConstraint.activate([
+            adView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 20),
+            adView.leadingAnchor.constraint(equalTo: navigationView.leadingAnchor, constant: 16),
+            adView.trailingAnchor.constraint(equalTo: navigationView.trailingAnchor, constant: -16),
+            adView.heightAnchor.constraint(equalToConstant: 76)
         ])
         
         let bottomView = UIView()
@@ -337,7 +381,9 @@ extension HomeViewController {
             vc.modalPresentationStyle = .fullScreen
             vc.cleanHandle = {
                 AnalyticsHelper.log(event: .cleanSuccess)
-                self.alert("Cleaned Successfully.")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.alert("Cleaned Successfully.")
+                }
                 BrowserUtil.shared.clean(from: self)
                 AnalyticsHelper.log(event: .cleanAlert)
             }
