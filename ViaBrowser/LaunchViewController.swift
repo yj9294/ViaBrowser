@@ -12,6 +12,8 @@ class LaunchViewController: UIViewController {
     var timer: Timer? = nil
     
     var adTimer: Timer? = nil
+    
+    var progress: Double = 0.0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,7 +91,7 @@ class LaunchViewController: UIViewController {
             adTimer = nil
         }
         
-        var progress = 0.0
+        progress = 0.0
         var duration = 2.5 / 0.6
         var isNeedShowAd = false
         
@@ -97,19 +99,21 @@ class LaunchViewController: UIViewController {
         self.label.text = "loading…0%"
         timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] t in
             guard let self  = self else { return }
-            if progress >= 1.0 {
+            if self.progress >= 1.0 {
                 t.invalidate()
-                GADHelper.share.show(.interstitial) { _ in
-                    rootViewController?.launched()
+                GADHelper.share.show(.interstitial, from: self) { _ in
+                    if self.progress >= 1.0 {
+                        rootViewController?.launched()
+                    }
                 }
             } else {
-                progress += 1.0 / (duration * 100)
+                self.progress += 1.0 / (duration * 100)
             }
-            self.progressView.progress = Float(progress)
-            if Int(progress * 100) >= 100 {
-                progress = 1.0
+            self.progressView.progress = Float(self.progress)
+            if Int(self.progress * 100) >= 100 {
+                self.progress = 1.0
             }
-            self.label.text = "loading…\(Int(progress * 100))%"
+            self.label.text = "loading…\(Int(self.progress * 100))%"
             
             if isNeedShowAd, GADHelper.share.isLoaded(.interstitial) {
                 duration = 0.1

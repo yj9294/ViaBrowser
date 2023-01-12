@@ -52,6 +52,14 @@ class CleanViewController: UIViewController {
             duration = 16.0
         })
         
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { t in
+            if GADHelper.share.isADLimited {
+                t.invalidate()
+                self.stopAnimation()
+                self.dismiss()
+            }
+        }
+        
         GADHelper.share.load(.interstitial)
         GADHelper.share.load(.native)
     }

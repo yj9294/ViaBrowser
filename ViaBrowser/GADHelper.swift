@@ -284,6 +284,14 @@ extension GADHelper {
             }.first?.display()
         }
     }
+    
+    func dismiss() {
+        ads.filter {
+            $0.position == .interstitial
+        }.forEach {
+            $0.dismiss()
+        }
+    }
 }
 
 struct ADConfig: Codable {
@@ -337,6 +345,10 @@ extension ADBaseModel {
     }
     
     @objc public func present(from vc: UIViewController? = nil) {
+        
+    }
+    
+    @objc public func dismiss() {
         
     }
 }
@@ -513,6 +525,16 @@ extension ADLoadModel {
         self.displayArray = []
     }
     
+    func dismiss() {
+        self.displayArray.forEach {
+            $0.dismiss()
+        }
+        
+        self.loadedArray.forEach {
+            $0.dismiss()
+        }
+    }
+    
     func clean() {
         self.displayArray = []
         self.loadedArray = []
@@ -580,6 +602,12 @@ extension InterstitialADModel {
             interstitialAd?.present(fromRootViewController: rootVC)
         }
     }
+    
+    override func dismiss() {
+        if let vc = rootViewController?.presentedViewController {
+            vc.dismiss(animated: true)
+        }
+    }
 }
 
 extension InterstitialADModel : GADFullScreenContentDelegate {
@@ -590,7 +618,7 @@ extension InterstitialADModel : GADFullScreenContentDelegate {
     
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         NSLog("[AD] (\(self.position.rawValue)) didFailToPresentFullScreenContentWithError ad FAILED for id \(self.model?.theAdID ?? "invalid id")")
-        if AppEnterbackground {
+        if !AppEnterbackground {
             closeHandler?()
         }
     }

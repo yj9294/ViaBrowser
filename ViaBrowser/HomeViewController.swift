@@ -382,10 +382,12 @@ extension HomeViewController {
             vc.cleanHandle = {
                 AnalyticsHelper.log(event: .cleanSuccess)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.alert("Cleaned Successfully.")
+                    if rootViewController?.selectedIndex == 1 {
+                        self.alert("Cleaned Successfully.")
+                        AnalyticsHelper.log(event: .cleanAlert)
+                    }
                 }
                 BrowserUtil.shared.clean(from: self)
-                AnalyticsHelper.log(event: .cleanAlert)
             }
             self.present(vc, animated: true)
         }
