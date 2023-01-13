@@ -28,11 +28,11 @@
 		C7673137295D4B560050E061 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C7673136295D4B560050E061 /* FirebaseAnalytics */; };
 		C7673139295D4B560050E061 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C7673138295D4B560050E061 /* FirebaseCrashlytics */; };
 		C767313B295D4B560050E061 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = C767313A295D4B560050E061 /* FirebaseRemoteConfig */; };
-		C767313D295D4BD20050E061 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C767313C295D4BD20050E061 /* GoogleService-Info.plist */; };
 		C767313F2963C1560050E061 /* GADHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767313E2963C1560050E061 /* GADHelper.swift */; };
 		C76731422963C1AE0050E061 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = C76731412963C1AE0050E061 /* GoogleMobileAds */; };
 		C76731442963C58C0050E061 /* admob.json in Resources */ = {isa = PBXBuildFile; fileRef = C76731432963C58C0050E061 /* admob.json */; };
 		C76731462963CAF80050E061 /* GADNativeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76731452963CAF80050E061 /* GADNativeView.swift */; };
+		C7F8E8C62970F43100B2EEC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7F8E8C52970F43100B2EEC0 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,10 +55,10 @@
 		C767312C295D3BA40050E061 /* CleanAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanAlertView.swift; sourceTree = "<group>"; };
 		C767312E295D3D700050E061 /* CleanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanViewController.swift; sourceTree = "<group>"; };
 		C7673130295D44F10050E061 /* FirebaseUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUtil.swift; sourceTree = "<group>"; };
-		C767313C295D4BD20050E061 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C767313E2963C1560050E061 /* GADHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GADHelper.swift; sourceTree = "<group>"; };
 		C76731432963C58C0050E061 /* admob.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = admob.json; sourceTree = "<group>"; };
 		C76731452963CAF80050E061 /* GADNativeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GADNativeView.swift; sourceTree = "<group>"; };
+		C7F8E8C52970F43100B2EEC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,13 +101,13 @@
 				C719DD87295B29A70003C7E7 /* RootViewController.swift */,
 				C719DD85295B282C0003C7E7 /* LaunchViewController.swift */,
 				C719DD89295BEA070003C7E7 /* HomeViewController.swift */,
+				C7F8E8C52970F43100B2EEC0 /* GoogleService-Info.plist */,
 				C767312E295D3D700050E061 /* CleanViewController.swift */,
 				C7673124295C68C80050E061 /* TabViewController.swift */,
 				C7673128295C7F980050E061 /* PrivacyViewController.swift */,
 				C767312A295C7F9F0050E061 /* TermsViewController.swift */,
 				C7673126295C7B290050E061 /* SettingView.swift */,
 				C767312C295D3BA40050E061 /* CleanAlertView.swift */,
-				C767313C295D4BD20050E061 /* GoogleService-Info.plist */,
 				C7673122295C600C0050E061 /* BrowserHelper.swift */,
 				C7673130295D44F10050E061 /* FirebaseUtil.swift */,
 				C76731432963C58C0050E061 /* admob.json */,
@@ -194,7 +194,7 @@
 			files = (
 				C76731442963C58C0050E061 /* admob.json in Resources */,
 				C7673121295BF4FD0050E061 /* Main.storyboard in Resources */,
-				C767313D295D4BD20050E061 /* GoogleService-Info.plist in Resources */,
+				C7F8E8C62970F43100B2EEC0 /* GoogleService-Info.plist in Resources */,
 				C719DD7C295ACA560003C7E7 /* LaunchScreen.storyboard in Resources */,
 				C719DD79295ACA560003C7E7 /* Assets.xcassets in Resources */,
 			);
