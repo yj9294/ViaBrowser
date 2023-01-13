@@ -114,9 +114,9 @@ extension SettingView: UICollectionViewDataSource, UICollectionViewDelegate {
             layoutHandle?()
             AnalyticsHelper.log(event: .tabNew, params: ["lig": "setting"])
         case .share:
-            var url = "https://itunes.apple.com/cn/app/id6443788592"
+            var url = "https://itunes.apple.com/cn/app/id1664695100"
             if !BrowserUtil.shared.webItem.isNavigation {
-                url = BrowserUtil.shared.webItem.webView.url?.absoluteString ?? "https://itunes.apple.com/cn/app/id6443788592"
+                url = BrowserUtil.shared.webItem.webView.url?.absoluteString ?? "https://itunes.apple.com/cn/app/id1664695100"
             }
             let vc = UIActivityViewController(activityItems: [url], applicationActivities: nil)
             rootViewController?.present(vc, animated: true)
@@ -134,7 +134,7 @@ extension SettingView: UICollectionViewDataSource, UICollectionViewDelegate {
             let vc = TermsViewController()
             rootViewController?.home.pushViewController(vc, animated: true)
         case .rate:
-            let url = URL(string: "https://itunes.apple.com/cn/app/id")
+            let url = URL(string: "https://itunes.apple.com/cn/app/id1664695100")
             if let url = url {
                 UIApplication.shared.open(url)
             }
